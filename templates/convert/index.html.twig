@@ -54,6 +54,14 @@
                 </div>
             </div>
             {{ form_end(form) }}
+            {% if history is defined and history is not empty %}
+                <h4 class="mb-3 mt-3">Historique des calculs pour la session</h4>
+                <div class="row">
+                    {% for description in history %}
+                        <p>{{ description }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
 
     </div>

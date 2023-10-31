@@ -50,9 +50,12 @@ class ConvertController extends AbstractController
                 $this->entityManager->flush();
             }
 
+            $_SESSION['history'][] = $calcDesc;
+
             return $this->render('convert/index.html.twig', [
                 'form' => $form->createView(),
-                'result' => $result
+                'result' => $result,
+                'history' => $_SESSION['history'] ?? null
             ]);
         }
 
