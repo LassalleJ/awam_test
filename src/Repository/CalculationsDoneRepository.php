@@ -21,6 +21,12 @@ class CalculationsDoneRepository extends ServiceEntityRepository
         parent::__construct($registry, CalculationsDone::class);
     }
 
+    public function deleteHistory()
+    {
+        $sql = "TRUNCATE TABLE calculations_done;";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql)->executeQuery();
+    }
+
 //    /**
 //     * @return CalculationsDone[] Returns an array of CalculationsDone objects
 //     */

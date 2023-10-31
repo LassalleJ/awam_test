@@ -42,13 +42,13 @@ class ExchangeRateController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_exchange_rate_show', methods: ['GET'])]
-    public function show(ExchangeRate $exchangeRate): Response
-    {
-        return $this->render('exchange_rate/show.html.twig', [
-            'exchange_rate' => $exchangeRate,
-        ]);
-    }
+//    #[Route('/{id}', name: 'app_exchange_rate_show', methods: ['GET'])]
+//    public function show(ExchangeRate $exchangeRate): Response
+//    {
+//        return $this->render('exchange_rate/show.html.twig', [
+//            'exchange_rate' => $exchangeRate,
+//        ]);
+//    }
 
     #[Route('/{id}/edit', name: 'app_exchange_rate_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ExchangeRate $exchangeRate, EntityManagerInterface $entityManager): Response
@@ -68,14 +68,14 @@ class ExchangeRateController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_exchange_rate_delete', methods: ['POST'])]
-    public function delete(Request $request, ExchangeRate $exchangeRate, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$exchangeRate->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($exchangeRate);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_exchange_rate_index', [], Response::HTTP_SEE_OTHER);
-    }
+//    #[Route('/{id}', name: 'app_exchange_rate_delete', methods: ['POST'])]
+//    public function delete(Request $request, ExchangeRate $exchangeRate, EntityManagerInterface $entityManager): Response
+//    {
+//        if ($this->isCsrfTokenValid('delete'.$exchangeRate->getId(), $request->request->get('_token'))) {
+//            $entityManager->remove($exchangeRate);
+//            $entityManager->flush();
+//        }
+//
+//        return $this->redirectToRoute('app_exchange_rate_index', [], Response::HTTP_SEE_OTHER);
+//    }
 }

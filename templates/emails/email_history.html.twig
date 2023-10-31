@@ -1,0 +1,9 @@
+<h1>A la date du {{ date|date('d/m/Y') }}</h1>
+<h2>Historique</h2>
+{% if calculationsDone is not empty %}
+    {% for line in calculationsDone %}
+        <p>{{ line.description }}</p>
+    {% endfor %}
+{% else %}
+    <p>Aucun calcul n'a été enregistré.</p>
+{% endif %}

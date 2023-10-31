@@ -63,6 +63,7 @@ class ConvertController extends AbstractController
 
         return $this->render('convert/index.html.twig', [
             'form' => $form->createView(),
+            'history' => $_SESSION['history'] ?? null
         ]);
     }
 
