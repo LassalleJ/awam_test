@@ -36,6 +36,10 @@ class ExchangeRateRepository extends ServiceEntityRepository
         ])
             ->fetchAssociative();
 
+        if(!$result) {
+            return false;
+        }
+
         if (($result['currency_from_id'] !== $idFrom) || ($result['currency_to_id'] !== $idTo)) {
             return 1 / (float)$result['rate'];
         }

@@ -13,7 +13,7 @@ class Converter
 
     }
 
-    public function convert(array $dataFields): array
+    public function convert(array $dataFields): array|false
     {
         $currencyOne = $dataFields['currency_one'];
         $currencyTwo = $dataFields['currency_two'];
@@ -22,6 +22,10 @@ class Converter
         $valueTwo = $dataFields['value_two'];
 
         $currencyResult = $dataFields['currency_result'];
+
+        if(!$this->exchangeRateRepository->findRate($currencyOne->getId(), $currencyResult->getId()) || !$this->exchangeRateRepository->findRate($currencyTwo->getId(), $currencyResult->getId())) {
+            return false;
+        }
 
         $dataFields['value_one'] = $currencyOne === $currencyResult ? $valueOne : $valueOne * $this->exchangeRateRepository->findRate($currencyOne->getId(), $currencyResult->getId());
         $dataFields['value_two'] = $currencyTwo === $currencyResult ? $valueTwo : $valueTwo * $this->exchangeRateRepository->findRate($currencyTwo->getId(), $currencyResult->getId());

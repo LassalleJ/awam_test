@@ -41,9 +41,11 @@
                         </div>
                     {% endif %}
                     <div class="col">
-                        {{ form_row(form.currency_result) }}
+                        {{ form_label(form.currency_result) }}
+                        {{ form_widget(form.currency_result) }}
                     </div>
                 </div>
+                <p>{{ form_errors(form.currency_result) }}</p>
             </div>
             <div class="row">
                 <div class="col-3">

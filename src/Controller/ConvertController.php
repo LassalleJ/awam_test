@@ -8,6 +8,7 @@ use App\Service\Calculator;
 use App\Service\Converter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -35,6 +36,14 @@ class ConvertController extends AbstractController
             $dataFields = $form->getData();
 
             $valuesConverted = $this->converter->convert($dataFields);
+
+            if(!$valuesConverted) {
+                $form->get('currency_result')->addError(new FormError('La conversion sélectionnée n\'est pas définie'));
+                return $this->render('convert/index.html.twig', [
+                    'form' => $form->createView(),
+                    'history' => $_SESSION['history'] ?? null
+                ]);
+            }
 
             $result = $this->calculator->performCalculation($valuesConverted);
 
