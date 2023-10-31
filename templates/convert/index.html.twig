@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Convertisseur - Calculateur{% endblock %}
+
+{% block body %}
+    <div class="container col-9 mt-5">
+        <h1 class="text-center mb-3">Convertisseur - Calculateur</h1>
+    </div>
+    <div class="container col-9 mt-3">
+        <div class="row">
+            <a class="btn btn-primary col me-1" href="{{ path('app_exchange_rate_index') }}">Gestion des taux de change</a>
+            <a class="btn btn-primary col ms-1" href="{{ path('app_currency_index') }}">Gestion des devises</a>
+        </div>
+    </div>
+    <div class="bloc-wrapper container col-9">
+        {{ form_start(form, {'attr': {'id': 'converter-form'}}) }}
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col-5">{{ form_row(form.value_one) }}</div>
+                    <div class="col-4">{{ form_row(form.currency_one) }}</div>
+                    <div class="col-3">{{ form_row(form.operand) }}</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col-5">{{ form_row(form.value_two) }}</div>
+                    <div class="col-4">{{ form_row(form.currency_two) }}</div>
+                    <div class="col-2 d-flex float-end"><p class="mt-auto text-center"> = </p></div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row">
+                    {% if result is defined %}
+                    <div class="col-5 d-flex float-end">
+                        <div class="equal-text h-50 mb-0"><p id="show-result" class="mt-auto text-center">{{ result }}</p></div>
+                    </div>
+                    {% else %}
+                        <div class="col-5 d-flex float-end">
+                            <div class="equal-text d-flex float-end h-50 mb-0"><p class="mt-auto text-center">-</p></div>
+                        </div>
+                    {% endif %}
+                    <div class="col">
+                        {{ form_label(form.currency_result) }}
+                        {{ form_widget(form.currency_result) }}
+                    </div>
+                </div>
+                <p>{{ form_errors(form.currency_result) }}</p>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    {{ form_row(form.save) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.submit) }}
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+{% endblock %}
