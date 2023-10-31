@@ -2,8 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Currency;
 use App\Entity\ExchangeRate;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,9 +15,19 @@ class ExchangeRateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('rate')
-            ->add('currencyFrom')
-            ->add('currencyTo')
+            ->add('currencyFrom', EntityType::class, [
+                'class' => Currency::class,
+                'choice_label' => 'code',
+                'label' => 'De'
+            ])
+            ->add('currencyTo', EntityType::class, [
+                'class' => Currency::class,
+                'choice_label' => 'code',
+                'label' => 'Vers'
+            ])
+            ->add('rate', NumberType::class,  [
+                'label' => 'Taux'
+            ])
         ;
     }
 

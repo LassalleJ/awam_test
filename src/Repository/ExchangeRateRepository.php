@@ -31,8 +31,8 @@ class ExchangeRateRepository extends ServiceEntityRepository
 
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $result = $stmt->executeQuery([
-            'idFrom'=>$idFrom,
-            'idTo'=>$idTo
+            'idFrom' => $idFrom,
+            'idTo' => $idTo
         ])
             ->fetchAssociative();
 
@@ -40,6 +40,20 @@ class ExchangeRateRepository extends ServiceEntityRepository
             return 1 / (float)$result['rate'];
         }
         return $result['rate'];
+    }
+
+    public function findAllRates()
+    {
+        $sql = "
+        SELECT
+        (SELECT code FROM  currency WHERE currency.id = exchange_rate.currency_from_id) as currency_from,
+        (SELECT code FROM  currency WHERE currency.id = exchange_rate.currency_to_id) as currency_to,
+        rate, id
+        FROM exchange_rate;                         
+        ";
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        return $stmt->executeQuery()->fetchAllAssociative();
     }
 
 //    /**

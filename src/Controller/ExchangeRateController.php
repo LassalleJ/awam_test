@@ -18,7 +18,7 @@ class ExchangeRateController extends AbstractController
     public function index(ExchangeRateRepository $exchangeRateRepository): Response
     {
         return $this->render('exchange_rate/index.html.twig', [
-            'exchange_rates' => $exchangeRateRepository->findAll(),
+            'exchange_rates' => $exchangeRateRepository->findAllRates(),
         ]);
     }
 
