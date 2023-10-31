@@ -51,10 +51,11 @@ class ConvertType extends AbstractType
                 'required' => true
             ])
             ->add('save', CheckboxType::class, [
-                'label' => 'Enregistrer le calcul'
+                'label' => 'Enregistrer le calcul',
+                'required' => false,
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Calculer'
+                'label' => 'Calculer',
             ])
             ;
     }

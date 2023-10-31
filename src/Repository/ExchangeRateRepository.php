@@ -21,6 +21,27 @@ class ExchangeRateRepository extends ServiceEntityRepository
         parent::__construct($registry, ExchangeRate::class);
     }
 
+    public function findRate(int $idFrom, int $idTo)
+    {
+        $sql = "
+        SELECT currency_from_id, currency_to_id, rate 
+        FROM exchange_rate 
+        WHERE (currency_from_id = :idFrom OR currency_to_id = :idFrom) AND (currency_from_id = :idTo OR currency_to_id = :idTo);
+        ";
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $result = $stmt->executeQuery([
+            'idFrom'=>$idFrom,
+            'idTo'=>$idTo
+        ])
+            ->fetchAssociative();
+
+        if (($result['currency_from_id'] !== $idFrom) || ($result['currency_to_id'] !== $idTo)) {
+            return 1 / (float)$result['rate'];
+        }
+        return $result['rate'];
+    }
+
 //    /**
 //     * @return ExchangeRate[] Returns an array of ExchangeRate objects
 //     */
