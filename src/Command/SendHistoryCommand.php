@@ -39,13 +39,19 @@ class SendHistoryCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+
+//        Le mail du destinataire est entré en argument de la commande
         $mailTo = $input->getArgument('email');
 
         if ($mailTo) {
             $io->note(sprintf('Vous avez demandé l\'envoi de l\'historique à l\'adresse suivante: %s', $mailTo));
+        } else {
+            $io->error('Veuillez préciser une adresse mail de destination');
+            exit;
         }
         $calculations = $this->calculationsDoneRepository->findAll();
 
+//        Création du mail avec un template
         $email = (new TemplatedEmail())
             ->from('converter@test.com')
             ->to($mailTo)
@@ -57,11 +63,12 @@ class SendHistoryCommand extends Command
             ])
 
             ;
-
-        $this->calculationsDoneRepository->deleteHistory();
         $this->mailer->send($email);
 
-        $io->success('Le mais a bien été envoyé, et l\'historique a été supprimé');
+//        Suppression de l'historique
+        $this->calculationsDoneRepository->deleteHistory();
+
+        $io->success('Le mail a bien été envoyé, et l\'historique a été supprimé');
 
         return Command::SUCCESS;
     }

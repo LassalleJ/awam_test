@@ -17,6 +17,7 @@ class ExchangeRateController extends AbstractController
     #[Route('/', name: 'app_exchange_rate_index', methods: ['GET'])]
     public function index(ExchangeRateRepository $exchangeRateRepository): Response
     {
+//      Légère modification de la méthode, afin de correctement afficher les codes des devises
         return $this->render('exchange_rate/index.html.twig', [
             'exchange_rates' => $exchangeRateRepository->findAllRates(),
         ]);

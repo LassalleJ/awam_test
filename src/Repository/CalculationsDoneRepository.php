@@ -21,6 +21,7 @@ class CalculationsDoneRepository extends ServiceEntityRepository
         parent::__construct($registry, CalculationsDone::class);
     }
 
+//    Suppression de la table correspondant à l'historique des calculs. Méthode appelée dans la commande d'envoi de mail.
     public function deleteHistory()
     {
         $sql = "TRUNCATE TABLE calculations_done;";

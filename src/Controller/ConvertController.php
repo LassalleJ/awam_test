@@ -33,11 +33,17 @@ class ConvertController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+//            Récupérer les données du formulaire
             $dataFields = $form->getData();
 
+//            Conversion des valeurs vers la devise du résultat souhaité
             $valuesConverted = $this->converter->convert($dataFields);
 
+//            Si le taux de change n'existe pas en base, $valueConverted sera false
             if(!$valuesConverted) {
+
+//              Renvoi vers le formulaire avec l'erreur
                 $form->get('currency_result')->addError(new FormError('La conversion sélectionnée n\'est pas définie'));
                 return $this->render('convert/index.html.twig', [
                     'form' => $form->createView(),
@@ -45,12 +51,15 @@ class ConvertController extends AbstractController
                 ]);
             }
 
+//          Calcul, avec la possibilité d'additionner ou soustraire
             $result = $this->calculator->performCalculation($valuesConverted);
 
+//          Génération du string permettant d'enregistrer le calcul en base et en session
             $calcDesc = $dataFields['value_one'] . ' ' . $dataFields['currency_one']->getCode()
                 . ' ' . $dataFields['operand'] . ' ' . $dataFields['value_two']
                 . ' ' . $dataFields['currency_two']->getCode() . ' = ' . $result . ' ' . $dataFields['currency_result']->getCode();
 
+//          Si la case est cochée, le calcul est stocké en base
             if ($form->get('save')->getData()) {
                 $save = new CalculationsDone();
                 $save->setDescription($calcDesc);
@@ -59,6 +68,7 @@ class ConvertController extends AbstractController
                 $this->entityManager->flush();
             }
 
+//          Le calcul est stocké en session
             $_SESSION['history'][] = $calcDesc;
 
             return $this->render('convert/index.html.twig', [

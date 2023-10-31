@@ -21,6 +21,8 @@ class ExchangeRateRepository extends ServiceEntityRepository
         parent::__construct($registry, ExchangeRate::class);
     }
 
+
+    //    Récupération du taux de change nécessaire aux calculs des conversions
     public function findRate(int $idFrom, int $idTo)
     {
         $sql = "
@@ -36,16 +38,19 @@ class ExchangeRateRepository extends ServiceEntityRepository
         ])
             ->fetchAssociative();
 
+//        Si le taux n'existe pas en base, renvoi d'un false
         if(!$result) {
             return false;
         }
 
+//      Calcul de l'inverse du taux si les devises sont inversées. Permet de réduire le nombre d'élément à entrer en base.
         if (($result['currency_from_id'] !== $idFrom) || ($result['currency_to_id'] !== $idTo)) {
             return 1 / (float)$result['rate'];
         }
         return $result['rate'];
     }
 
+//    Récupération des différents taux de change avec le code de chaque devise (page index des taux de change)
     public function findAllRates()
     {
         $sql = "

@@ -42,13 +42,13 @@ class CurrencyController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_currency_show', methods: ['GET'])]
-    public function show(Currency $currency): Response
-    {
-        return $this->render('currency/show.html.twig', [
-            'currency' => $currency,
-        ]);
-    }
+//    #[Route('/{id}', name: 'app_currency_show', methods: ['GET'])]
+//    public function show(Currency $currency): Response
+//    {
+//        return $this->render('currency/show.html.twig', [
+//            'currency' => $currency,
+//        ]);
+//    }
 
     #[Route('/{id}/edit', name: 'app_currency_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Currency $currency, EntityManagerInterface $entityManager): Response
@@ -68,14 +68,14 @@ class CurrencyController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_currency_delete', methods: ['POST'])]
-    public function delete(Request $request, Currency $currency, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$currency->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($currency);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_currency_index', [], Response::HTTP_SEE_OTHER);
-    }
+//    #[Route('/{id}', name: 'app_currency_delete', methods: ['POST'])]
+//    public function delete(Request $request, Currency $currency, EntityManagerInterface $entityManager): Response
+//    {
+//        if ($this->isCsrfTokenValid('delete'.$currency->getId(), $request->request->get('_token'))) {
+//            $entityManager->remove($currency);
+//            $entityManager->flush();
+//        }
+//
+//        return $this->redirectToRoute('app_currency_index', [], Response::HTTP_SEE_OTHER);
+//    }
 }
