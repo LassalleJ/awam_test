@@ -1,3 +1,18 @@
 body {
     background-color: lightgray;
 }
+.equal-text {
+    font-weight: bolder;
+    margin: auto;
+    align-items:center;
+    justify-content:center;
+}
+.bloc-wrapper {
+    background-color: beige;
+    border-radius: 10px;
+    padding:30px;
+    box-shadow: 0 0 15px 5px lightgray;
+}
+button {
+    width:100%;
+}
